@@ -19,11 +19,6 @@ def do_post(URI, data={}):
 def do_get(URI):
     resp = requests.post(URI, headers={"X-Starfighter-Authorization":apikey})
     return resp.content
-#p = argparse.ArgumentParser()
-#p.add_argument("venue", action='store', type=str)
-#p.add_argument("stock", action='store', type=str)
-#
-#a = p.parse_args()
 
 t0 = time.time()
 
@@ -35,11 +30,10 @@ last = int(data['error'].split()[-1].strip(")"))
 found_accts = Counter()
 onum = max(0, last-50)
 data = {'error':""}
-#for onum in range(last-50, last):
 consec_refusals = 0
 subprocesses = []
 try:
-    while 1:#data['error'].find('highest available')==-1:
+    while 1:
         onum +=1 
         sys.stdout.write('\r'+str(onum));sys.stdout.flush()
         try:
@@ -48,20 +42,17 @@ try:
         except requests.exceptions.ConnectionError:
             consec_refusals+=1
             print 'oops, got refused...', consec_refusals
-        #time.sleep(0.05)
         if 'error' not in data:
             time.sleep(.25)
             continue
         new_acct = data['error'].split()[-1].strip('.')
-        #if new_acct not in found_accts:
-        #    print new_acct
         found_accts[new_acct]+=1
         if found_accts[new_acct]==3:
             # for some reason there's a bunch of accounts that just place one order for like 20 shares
             # and are never heard from again, which chews up websocket resources.  So ignore them.  We'll lose some
             # but hopefully not enough to make much of a difference if we collect for a while
             print new_acct, time.time()-t0
-            subprocesses.append(subprocess.Popen(["/usr/bin/python", "/home/ubuntu/stockfighter/l6_snoop.py", venue, new_acct]))
+            subprocesses.append(subprocess.Popen(["/usr/bin/python", "./l6_snoop.py", venue, new_acct]))
 except KeyboardInterrupt:
     #This should kill all of the subprocesses somehow...
     for p in subprocesses:

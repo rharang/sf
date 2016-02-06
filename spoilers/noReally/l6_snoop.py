@@ -40,8 +40,6 @@ class ClientProtocol(WebSocketClientProtocol):
         print wasClean, code, reason
 
     def onMessage(self, payload, isBinary):
-        #self.msg_ct+=1
-        #sys.stdout.write("\r"+str(self.msg_ct)); sys.stdout.flush()
         if not isBinary:
             data = payload.decode('utf8')
             self.ts = time.time()

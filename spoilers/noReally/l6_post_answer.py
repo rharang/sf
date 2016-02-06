@@ -1,7 +1,7 @@
 import argparse, ConfigParser, requests, json
 
 p = ConfigParser.ConfigParser()
-p.read("/home/ubuntu/stockfighter/SF.ini")
+p.read("SF.ini")
 apikey = p.get("SF", "APIkey")
 
 p = argparse.ArgumentParser()
