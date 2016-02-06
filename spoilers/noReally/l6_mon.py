@@ -4,7 +4,7 @@ p = ConfigParser.ConfigParser()
 p.read("SF.ini")
 apikey = p.get("SF", "APIkey")
 
-# Shut up the fucking SSL warnings
+# Shut up the SSL warnings
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 

@@ -7,7 +7,7 @@ p.read("current_level.ini")
 venue = p.get("Level", "exch")
 stock = p.get("Level", "symbol")
 
-# Shut up the fucking SSL warnings
+# Shut up the SSL warnings
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 
